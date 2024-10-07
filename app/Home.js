@@ -34,14 +34,7 @@ const PopularItem = ({ name, price }) => (
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <View style={styles.searchBarContainer}>
-        <Ionicons name="search" size={20} color="#999" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search for food..."
-          placeholderTextColor="#999"
-        />
-      </View>
+     
 
       <ScrollView style={styles.content}>
         <Text style={styles.heading}>What would you like to eat?</Text>
@@ -102,6 +95,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginHorizontal: 16,
     marginBottom: 16,
+    marginTop:10,
   },
   categoryList: {
     paddingHorizontal: 16,
