@@ -1,52 +1,117 @@
 import React from 'react';
-import { View, Text, SectionList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, SectionList, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // وارد کردن آیکن‌ها
 
 const menuSections = [
   {
     title: 'Pizzas',
     data: [
-      { id: '1', name: 'Pepperoni Pizza', price: 12.99, ingredients: 'Pepperoni, Mozzarella, Tomato Sauce' },
-      { id: '2', name: 'Margherita Pizza', price: 11.99, ingredients: 'Tomato, Mozzarella, Basil' },
-      { id: '3', name: 'Kebab Pizza', price: 13.99, ingredients: 'Kebab, Onion, Tomato, Mozzarella' },
+      { 
+        id: '1', 
+        name: 'Pepperoni Pizza', 
+        price: 12.99, 
+        ingredients: 'Pepperoni, Mozzarella, Tomato Sauce', 
+        image: require('./../assets/pizza.jpg') // آدرس تصویر پیتزا
+      },
+      { 
+        id: '2', 
+        name: 'Margherita Pizza', 
+        price: 11.99, 
+        ingredients: 'Tomato, Mozzarella, Basil',
+        image: require('./../assets/pizza.jpg') // آدرس تصویر پیتزا
+      },
+      { 
+        id: '3', 
+        name: 'Kebab Pizza', 
+        price: 13.99, 
+        ingredients: 'Kebab, Onion, Tomato, Mozzarella',
+        image: require('./../assets/pizza.jpg') // آدرس تصویر پیتزا
+      },
     ],
   },
   {
     title: 'Burgers',
     data: [
-      { id: '4', name: 'Cheeseburger', price: 9.99, ingredients: 'Beef, Cheese, Lettuce, Tomato, Pickles' },
-      { id: '5', name: 'Veggie Burger', price: 8.99, ingredients: 'Black Bean, Avocado, Lettuce, Tomato' },
+      { 
+        id: '4', 
+        name: 'Cheeseburger', 
+        price: 9.99, 
+        ingredients: 'Beef, Cheese, Lettuce, Tomato, Pickles', 
+        image: require('./../assets/burger.jpg') // آدرس تصویر همبرگر
+      },
+      { 
+        id: '5', 
+        name: 'Veggie Burger', 
+        price: 8.99, 
+        ingredients: 'Black Bean, Avocado, Lettuce, Tomato', 
+        image: require('./../assets/burger.jpg') // آدرس تصویر همبرگر
+      },
     ],
   },
   {
     title: 'Salads',
     data: [
-      { id: '6', name: 'Caesar Salad', price: 8.99, ingredients: 'Romaine, Croutons, Caesar Dressing' },
-      { id: '7', name: 'Greek Salad', price: 7.99, ingredients: 'Cucumber, Tomato, Olives, Feta' },
+      { 
+        id: '6', 
+        name: 'Caesar Salad', 
+        price: 8.99, 
+        ingredients: 'Romaine, Croutons, Caesar Dressing', 
+        image: require('./../assets/salad.jpg') // آدرس تصویر سالاد
+      },
+      { 
+        id: '7', 
+        name: 'Greek Salad', 
+        price: 7.99, 
+        ingredients: 'Cucumber, Tomato, Olives, Feta', 
+        image: require('./../assets/salad.jpg') // آدرس تصویر سالاد
+      },
     ],
   },
   {
     title: 'Drinks',
     data: [
-      { id: '8', name: 'Coke', price: 1.99 },
-      { id: '9', name: 'Lemonade', price: 2.49 },
+      { 
+        id: '8', 
+        name: 'Coke', 
+        price: 1.99, 
+        image: require('./../assets/drink.jpg') // آدرس تصویر نوشیدنی
+      },
+      { 
+        id: '9', 
+        name: 'Lemonade', 
+        price: 2.49, 
+        image: require('./../assets/drink.jpg') // آدرس تصویر نوشیدنی
+      },
     ],
   },
   {
     title: 'Desserts',
     data: [
-      { id: '10', name: 'Chocolate Cake', price: 4.99 },
-      { id: '11', name: 'Ice Cream', price: 3.99 },
+      { 
+        id: '10', 
+        name: 'Chocolate Cake', 
+        price: 4.99, 
+        image: require('./../assets/cake.jpg') // آدرس تصویر کیک
+      },
+      { 
+        id: '11', 
+        name: 'Ice Cream', 
+        price: 3.99, 
+        image: require('./../assets/cake.jpg') // آدرس تصویر کیک
+      },
     ],
   },
 ];
 
-const MenuItem = ({ name, price, ingredients, onAddToOrder }) => (
+const MenuItem = ({ name, price, ingredients, image, onAddToOrder }) => (
   <TouchableOpacity style={styles.menuItem}>
     <View style={styles.menuItemContent}>
-      <Text style={styles.menuItemName}>{name}</Text>
-      <Text style={styles.menuItemPrice}>${price.toFixed(2)}</Text> 
-      {ingredients && <Text style={styles.menuItemIngredients}>{ingredients}</Text>}
+      {image && <Image source={image} style={styles.menuItemImage} />} 
+      <View style={styles.menuTextContent}>
+        <Text style={styles.menuItemName}>{name}</Text>
+        <Text style={styles.menuItemPrice}>${price.toFixed(2)}</Text> 
+        {ingredients && <Text style={styles.menuItemIngredients}>{ingredients}</Text>}
+      </View>
     </View>
     <TouchableOpacity onPress={onAddToOrder}>
       <Ionicons name="cart-outline" size={24} color="red" /> 
@@ -70,6 +135,7 @@ const MenuScreen = ({ addToOrder }) => {
             name={item.name}
             price={item.price}
             ingredients={item.ingredients}
+            image={item.image} // ارسال تصویر به MenuItem
             onAddToOrder={() => handleAddToOrder(item)} // اتصال تابع به آیکن سبد خرید
           />
         )}
@@ -106,7 +172,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   menuItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  menuTextContent: {
     flexDirection: 'column',
+    marginLeft: 10, // فاصله بین تصویر و متن
+  },
+  menuItemImage: {
+    width: 50, // اندازه تصویر
+    height: 50, // اندازه تصویر
+    borderRadius: 5, // گرد کردن گوشه‌های تصویر
   },
   menuItemName: {
     fontSize: 18,
