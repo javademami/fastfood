@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 12.5.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"  // توزیع برای تست داخلی
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "distribution": "internal",  // توزیع برای تست داخلی
+      "android": {
+        "buildType": "apk"  // مشخص می‌کند که نوع بیلد APK باشد
+      },
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

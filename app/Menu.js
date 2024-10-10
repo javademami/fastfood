@@ -180,8 +180,8 @@ const styles = StyleSheet.create({
     marginLeft: 10, // فاصله بین تصویر و متن
   },
   menuItemImage: {
-    width: 50, // اندازه تصویر
-    height: 50, // اندازه تصویر
+    width: 60, // اندازه تصویر
+    height: 60, // اندازه تصویر
     borderRadius: 5, // گرد کردن گوشه‌های تصویر
   },
   menuItemName: {
