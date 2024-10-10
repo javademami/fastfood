@@ -4,22 +4,23 @@ import * as ImagePicker from 'expo-image-picker';
 
 const UserProfile = ({ user = {}, onLogout }) => {
   const [profileImage, setProfileImage] = useState(user.profileImage);
+
   const [email, setEmail] = useState(user.email);
   const [phone, setPhone] = useState(user.phone);
   const [address, setAddress] = useState(user.address);
   const [city, setCity] = useState(user.city);
   const [postalCode, setPostalCode] = useState(user.postalCode);
-  
-  // تاریخچه سفارشات با مجموع قیمت‌ها
-  const [orderHistory, setOrderHistory] = useState(user.orderHistory || [
-    { date: '2024-01-01', items: ['Pepperoni Pizza', 'Margherita Pizza'], total: 38 },
-    { date: '2024-02-15', items: ['Cheeseburger'], total: 15 },
-    { date: '2024-03-20', items: ['Greek Salad', 'Spaghetti', 'Tiramisu'], total: 36 },
-  ]);
+
+  // فیلدهای کارت
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardHolderName, setCardHolderName] = useState('');
+  const [expiredDate, setExpiredDate] = useState('');
+
+  // ذخیره‌سازی اطلاعات کارت
+  const [savedCardInfo, setSavedCardInfo] = useState(null);
 
   const chooseProfileImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
     if (permissionResult.granted === false) {
       Alert.alert('Permission to access camera roll is required!');
       return;
@@ -38,7 +39,8 @@ const UserProfile = ({ user = {}, onLogout }) => {
   };
 
   const saveChanges = () => {
-    Alert.alert('Changes saved!', 'Your profile information has been updated.');
+    setSavedCardInfo({ cardNumber, cardHolderName, expiredDate });
+    Alert.alert('Changes saved!', 'Your profile information and card details have been updated.');
   };
 
   return (
@@ -46,7 +48,10 @@ const UserProfile = ({ user = {}, onLogout }) => {
       {/* قسمت پروفایل */}
       <View style={styles.profileSection}>
         <TouchableOpacity onPress={chooseProfileImage}>
-          <Image source={{ uri: profileImage }} style={styles.profileImage} />
+          <Image 
+            source={profileImage ? { uri: profileImage } : require('./../assets/man.png')} 
+            style={styles.profileImage} 
+          />
         </TouchableOpacity>
         <Text style={styles.greetingText}>Hi!</Text>
         <Text style={styles.userName}>Javad</Text>
@@ -75,26 +80,45 @@ const UserProfile = ({ user = {}, onLogout }) => {
         <TextInput style={styles.input} value={postalCode} onChangeText={setPostalCode} />
       </View>
 
-      {/* تاریخچه سفارشات */}
-      <View style={styles.orderHistorySection}>
-        <Text style={styles.orderHistoryTitle}>Order History</Text>
-        <View style={styles.tableHeader}>
-          <Text style={styles.tableHeaderText}>Date</Text>
-          <Text style={styles.tableHeaderText}>Items</Text>
-          <Text style={styles.tableHeaderText}>Total</Text>
-        </View>
-        {orderHistory.length > 0 ? (
-          orderHistory.map((order, index) => (
-            <View key={index} style={styles.orderItem}>
-              <Text style={styles.orderText}>{order.date}</Text>
-              <Text style={styles.orderText}>{order.items.join(', ')}</Text>
-              <Text style={styles.orderText}>${order.total}</Text>
-            </View>
-          ))
-        ) : (
-          <Text>No orders found.</Text>
-        )}
+      {/* فیلدهای کارت */}
+      <View style={styles.cardSection}>
+        <Text style={styles.infoLabel}>Card Number:</Text>
+        <TextInput
+          style={styles.input}
+          value={cardNumber}
+          onChangeText={setCardNumber}
+          placeholder="Enter card number"
+        />
+
+        <Text style={styles.infoLabel}>Card Holder Name:</Text>
+        <TextInput
+          style={styles.input}
+          value={cardHolderName}
+          onChangeText={setCardHolderName}
+          placeholder="Enter card holder name"
+        />
+
+        <Text style={styles.infoLabel}>Expired Date:</Text>
+        <TextInput
+          style={styles.input}
+          value={expiredDate}
+          onChangeText={setExpiredDate}
+          placeholder="MM/YY"
+        />
       </View>
+
+      {/* کارت با اطلاعات ورودی */}
+      {cardNumber && cardHolderName && expiredDate ? (
+        <View style={styles.card}>
+          <Image source={require('./../assets/Card.png')} style={styles.cardBackground} />
+          <Text style={styles.cardNumber}>{cardNumber}</Text>
+          <Text style={styles.cardHolder}>
+            {cardHolderName} 
+            
+          </Text>
+          <Text style={styles.expHolder}>{expiredDate}</Text>
+        </View>
+      ) : null}
 
       {/* دکمه ذخیره تغییرات */}
       <TouchableOpacity style={styles.saveButton} onPress={saveChanges}>
@@ -106,7 +130,7 @@ const UserProfile = ({ user = {}, onLogout }) => {
         <Text style={styles.logoutText}>Logout</Text>
       </TouchableOpacity>
 
-      <View style={{ marginBottom: 20 }} /> 
+      <View style={{ marginBottom: 20 }} />
     </ScrollView>
   );
 };
@@ -114,7 +138,7 @@ const UserProfile = ({ user = {}, onLogout }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FAF9F6',
     padding: 16,
   },
   profileSection: {
@@ -166,38 +190,56 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    backgroundColor: '#f4f4f4',
   },
-  orderHistorySection: {
+  cardSection: {
     marginBottom: 20,
+    
   },
-  orderHistoryTitle: {
-    fontSize: 20,
+  card: {
+    width:343,
+    height:218,
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 5,
+    marginBottom:30,
+    borderWidth: 0,
+    borderRadius: 10,
+    borderColor: '#ccc',
+    
+    shadowColor: '#ccc',
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
+  },
+  cardBackground: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    borderRadius: 10,
+  },
+  cardNumber: {
+    fontSize: 22,
     fontWeight: 'bold',
+    color: '#fff',
     marginBottom: 10,
+   
   },
-  tableHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
-    padding: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+  cardHolder: {
+    fontSize: 16,
+    color: '#333',
+    position: 'absolute',
+    bottom:10,
+    color: '#fff',
+    left:30,
   },
-  tableHeaderText: {
-    fontWeight: 'bold',
-    flex: 1,
-    textAlign: 'center',
-  },
-  orderItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-  },
-  orderText: {
-    flex: 1,
-    textAlign: 'center',
+  expHolder: {
+    fontSize: 16,
+    color: '#333',
+    position: 'absolute',
+    bottom:10,
+    color: '#fff',
+    left:170,
   },
   saveButton: {
     backgroundColor: 'red',

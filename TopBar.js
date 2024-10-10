@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; // وارد کردن Ionicons
 
 // آدرس فایل‌های لوگو و عکس پروفایل
-const logo = require('./assets/logo.png'); // مسیر لوگو
+const logo = require('./assets/log.png'); // مسیر لوگو
 const profileImage = require('./assets/profile.png'); // مسیر عکس پروفایل
 
 const TopBar = ({ orderCount }) => { // اضافه کردن props برای تعداد آیتم‌های سفارش
@@ -47,9 +47,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 150, // افزایش اندازه لوگو
+        width: 60, // افزایش اندازه لوگو
         height: 60, // افزایش اندازه لوگو
         resizeMode: 'contain',
+        borderRadius: 10,
     },
     profileContainer: {
         flexDirection: 'row',
