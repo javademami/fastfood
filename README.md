@@ -3,7 +3,7 @@
 
 ## Overview
 
-Munch Box is a mobile application designed for food ordering and delivery. It provides users with a seamless interface to browse the menu, customize their orders, and manage their profiles. The application aims to enhance the food ordering experience by integrating user-friendly features, including image uploads, cart management, and real-time notifications.
+Munch Box is a React Native (Expo) mobile application designed for food ordering and delivery. It provides users with a seamless interface to browse the menu, customize their orders, and manage their profiles. The application aims to enhance the food ordering experience by integrating user-friendly features, including image uploads, cart management, and real-time notifications.
 
 ## Features
 
