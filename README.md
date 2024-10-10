@@ -46,7 +46,7 @@ Here are some screenshots of the application to illustrate its functionality:
 To get started with the Munch Box project, clone the repository and install the necessary dependencies.
 
 ```bash
-git clone https://github.com/yourusername/munch-box.git
+git clone https://github.com/javademami/fastfood.git
 cd munch-box
 npm install
 ```
