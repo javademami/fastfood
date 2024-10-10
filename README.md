@@ -14,7 +14,7 @@ Munch Box is a React Native (Expo) mobile application designed for food ordering
 
 ## Demo
 Install APK file on your Android device to test it.
-https://expo.dev/accounts/javademami/projects/fastfood-app/builds/64ae345c-ac78-423d-914b-a5d25be48b39
+https://expo.dev/accounts/javademami/projects/fastfood-app/builds/89bef2b8-fe69-4cfd-9714-dfd5f3ed5b9c
 
 ## Screenshots
 
